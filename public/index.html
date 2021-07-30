@@ -19,7 +19,7 @@
 
         <div class="chat__footer">
             <form id="message-form">
-                <input type="text" name="message" placeholder="Message">
+                <input type="text" name="message" placeholder="Message" autofocus autocomplete="off">
                 <button type="submit">Send</button>
                 <button id="send-location">Send Location</button>
             </form>
@@ -29,6 +29,7 @@
     
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/libs/jquery-3.6.0.min.js"></script>
+    <script src="/js/libs/moment.js"></script>
     <script src="/js/index.js"></script>
 </body>
 </html>
