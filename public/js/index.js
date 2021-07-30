@@ -2,24 +2,29 @@ var socket = io();
 
 socket.on('connect', function () {
     console.log('Connected to server');
-
-    socket.on('newMessage', (message) => {
-        console.log('newMessage', message);
-        var li = jQuery('<li></li>');
-        li.text(`${message.from}: ${message.text}`);
-
-        jQuery('#messages').append(li);
-    })
-    
 })
 
 socket.on('disconnect', function () {
     console.log('Disconnected from server');
 });
 
-socket.on('newEmail', function(email){
 
-   jQuery('#messages').append(li);
+socket.on('newMessage', (message) => {
+    console.log('newMessage', message);
+    var li = jQuery('<li></li>');
+    li.text(`${message.from}: ${message.text}`);
+
+    jQuery('#messages').append(li);
+})
+
+socket.on('newLocationMessage', function(message){
+    var li = jQuery('<li></li>');
+    var a = jQuery('<a target="_blank">My current location</a>');
+
+    li.text(`${message.from}: `);
+    a.attr('href', message.url);
+    li.append(a);
+    jQuery('#messages').append(li);
 })
 
 jQuery('#message-form').on('submit', function(e){
@@ -31,8 +36,9 @@ jQuery('#message-form').on('submit', function(e){
     socket.emit('createMessage', {
         from: 'User',
         text: messageTextbox.val()
-    }, function(){
-        messageTextbox.val('')
+    }, function(message){
+        messageTextbox.val('');
+        console.log(message)
     });
 })
 
